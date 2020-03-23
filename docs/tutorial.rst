@@ -4,7 +4,7 @@ Tutorial
 .. note:: Did you find any of these instructions confusing? `Edit this file`_
           and submit a pull request with your improvements!
 
-.. _`Edit this file`: https://github.com/audreyr/cookiecutter-pypackage/blob/master/docs/tutorial.rst
+.. _`Edit this file`: https://github.com/dustinbleile/cookiecutter-pypackage/blob/master/docs/tutorial.rst
 
 To start with, you will need a `GitHub account`_ and an account on `PyPI`_. Create these before you get started on this tutorial. If you are new to Git and GitHub, you should probably spend a few minutes on some of the tutorials at the top of the page at `GitHub Help`_.
 
@@ -19,29 +19,23 @@ Step 1: Install Cookiecutter
 First, you need to create and activate a virtualenv for the package project. Use your favorite method, or create a virtualenv for your new package like this:
 
 .. code-block:: bash
+    python -m venv venv
 
-    virtualenv ~/.virtualenvs/mypackage
-
-Here, ``mypackage`` is the name of the package that you'll create.
 
 Activate your environment:
 
 .. code-block:: bash
 
-    source bin/activate
+    source venv/bin/activate
 
-On Windows, activate it like this. You may find that using a Command Prompt window works better than gitbash.
-
-.. code-block:: powershell
-
-    > \path\to\env\Scripts\activate
 
 
 Install cookiecutter:
 
 .. code-block:: bash
 
-    pip install cookiecutter
+    pip install -U pip setuptools
+    pip install -U cookiecutter
 
 
 Step 2: Generate Your Package
@@ -52,7 +46,10 @@ Now it's time to generate your Python package.
 Use cookiecutter, pointing it at the cookiecutter-pypackage repo:
 
 .. code-block:: bash
-
+ 
+    # this repository
+    cookiecutter https://github.com/dustinbleile/cookiecutter-pypackage.git
+    # Original project
     cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
 
 You'll be asked to enter a bunch of values to set the package up.
@@ -94,7 +91,7 @@ Your virtualenv should still be activated. If it isn't, activate it now. Install
 
 .. code-block:: bash
 
-    pip install -r requirements_dev.txt
+    pip install -r requirements_dev.txt -r requirements_dev_lint.txt
 
 
 Step 5: Set Up Travis CI
