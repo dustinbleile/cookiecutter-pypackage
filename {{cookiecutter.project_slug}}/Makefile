@@ -48,6 +48,9 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
+	find {{ cookiecutter.project_slug }} -name '*.py' -exec isort --atomic {}
+	find tests -name '*.py' -exec isort --atomic {}
+	black --line-length 100
 	flake8 {{ cookiecutter.project_slug }} tests
 
 test: ## run tests quickly with the default Python
@@ -91,3 +94,10 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+env_setup: ## setup venv
+	[ ! -f venv_{{ cookiecutter.project_slug }} ] && python3 -m venv venv_{{ cookiecutter.project_slug }}
+	ls -l venv_{{ cookiecutter.project_slug }}
+
+env_activate:  ## show need command
+	echo "source venv_{{ cookiecutter.project_slug }}/bin/activate"
