@@ -94,7 +94,7 @@ Your virtualenv should still be activated. If it isn't, activate it now. Install
     pip install -r requirements_dev.txt -r requirements_dev_lint.txt
 
 
-Step 5: Set Up Travis CI
+Step 5: Set Up Travis CI - skipped at GSC - using Bamboo
 ------------------------
 
 `Travis CI org`_ [*]_ is a continuous integration tool used to prevent integration problems. Every commit to the master branch will trigger automated builds of the application.
