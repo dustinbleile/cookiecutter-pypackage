@@ -53,6 +53,7 @@ lint: ## check style with flake8
 	black --line-length 100 {{ cookiecutter.project_slug }}
 	black --line-length 100 tests
 	flake8 --max-line-length 100 {{ cookiecutter.project_slug }} tests
+	mypy --ignore-missing-imports {{ cookiecutter.project_slug }} tests
 
 test: ## run tests quickly with the default Python
 {%- if cookiecutter.use_pytest == 'y' %}
@@ -99,11 +100,16 @@ install: clean ## install the package to the active Python's site-packages
 pip_install: clean ## pip install
 	pip install -e .
 
-pip_install_dev: clean ## pip install
-	pip install -e . -r requirements_dev.txt
+pip_install_dev: clean ## pip install with dev linting and files
+	pip install -e . -r requirements_dev.txt -U
 
-env_setup: ## setup venv
-	[ ! -f venv_{{ cookiecutter.project_slug }} ] && python3 -m venv venv_{{ cookiecutter.project_slug }}
+env_setup: ## setup venv and git init - set git remote after
+	[ ! -f venv_{{ cookiecutter.project_slug }} ] \
+	&& git init . \
+	&& git add . \
+	&& git commit -m "initial skeleton commit" \
+	&& python3 -m venv venv_{{ cookiecutter.project_slug }}
+
 	ls -l venv_{{ cookiecutter.project_slug }}
 
 env_activate:  ## show need command
