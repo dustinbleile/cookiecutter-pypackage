@@ -48,10 +48,11 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	find {{ cookiecutter.project_slug }} -name '*.py' -exec isort --atomic {}
-	find tests -name '*.py' -exec isort --atomic {}
-	black --line-length 100
-	flake8 {{ cookiecutter.project_slug }} tests
+	find {{ cookiecutter.project_slug }} -name '*.py' -exec isort --atomic {} +
+	find tests -name '*.py' -exec isort --atomic {} +
+	black --line-length 100 {{ cookiecutter.project_slug }}
+	black --line-length 100 tests
+	flake8 --max-line-length 100 {{ cookiecutter.project_slug }} tests
 
 test: ## run tests quickly with the default Python
 {%- if cookiecutter.use_pytest == 'y' %}
@@ -94,6 +95,12 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+pip_install: clean ## pip install
+	pip install -e .
+
+pip_install_dev: clean ## pip install
+	pip install -e . -r requirements_dev.txt
 
 env_setup: ## setup venv
 	[ ! -f venv_{{ cookiecutter.project_slug }} ] && python3 -m venv venv_{{ cookiecutter.project_slug }}
